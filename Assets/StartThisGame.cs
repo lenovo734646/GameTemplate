@@ -12,19 +12,21 @@ public class AShower : IShowDownloadProgress
 {
 	public StartThisGame thisP;
 	float timeElapse_ = 0.0f;
-	public void Desc(string desc)
+	public override void Desc(string desc)
 	{
-		thisP.Progress(desc);
+		if(!isDestoryed) thisP.Progress(desc);
 	}
 
-	public void Progress(long downed, long totalLength)
+	public override void Progress(long downed, long totalLength)
 	{
+		if (isDestoryed) return;
 		if (Time.time - timeElapse_ > 1.0f && totalLength > 0)
 			thisP.Progress(string.Format(LanguageStartup.DownloadProgress, (int)(downed * 100.0f / totalLength)));
 	}
 
-	public void SetState(DownloadState st)
+	public override void SetState(DownloadState st)
 	{
+		if (isDestoryed) return;
 		if (st == DownloadState.Downloading) {
 			timeElapse_ = Time.time;
 		}
@@ -47,7 +49,7 @@ public class StartThisGame : MonoBehaviour
 		var btn = canvas.FindChildDeeply("Button").GetComponent<Button>();
 		txtPro = canvas.FindChildDeeply("txtProgress").GetComponent<Text>();
 
-
+		show_.SetUIRoot(canvas.FindChildDeeply("txtProgress"));
 		btn.onClick.AddListener(() => {
 			btn.gameObject.SetActive(false);
 			this.StartCor(bridge_.DoStart(show_, false), false);
@@ -66,8 +68,8 @@ public class StartThisGame : MonoBehaviour
 		//如果
 		if (bridge_.Prepared() && !exit_) {
 			Progress(LanguageStartup.IsLoadingHotfixModule);
-			HotfixCaller.SetHotfixValue("defaultGameFromHost", "SLWH");
-			HotfixCaller.RunGame("Hotfix.Common.AppController", "Assets/Res/Games/SLWH/HotFixDll.json", "Assets/Res/Games/SLWH/HotFixDll_pdb.json", show_);
+			HotfixCaller.SetHotfixValue("defaultGameFromHost", "BCBM");
+			HotfixCaller.RunGame("Hotfix.Common.AppController", "Assets/Res/Games/BCBM/HotFixDll.json", "Assets/Res/Games/BCBM/HotFixDll_pdb.json", show_);
 			//解开循环引用
 			show_ = null;
 			//删除本组件,用不着了
