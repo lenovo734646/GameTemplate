@@ -30,10 +30,10 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("Read", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Read_1);
 
-            field = type.GetField("subCmd", flag);
-            app.RegisterCLRFieldGetter(field, get_subCmd_0);
-            app.RegisterCLRFieldSetter(field, set_subCmd_0);
-            app.RegisterCLRFieldBinding(field, CopyToStack_subCmd_0, AssignFromStack_subCmd_0);
+            field = type.GetField("protoName", flag);
+            app.RegisterCLRFieldGetter(field, get_protoName_0);
+            app.RegisterCLRFieldSetter(field, set_protoName_0);
+            app.RegisterCLRFieldBinding(field, CopyToStack_protoName_0, AssignFromStack_protoName_0);
 
             args = new Type[]{};
             method = type.GetConstructor(flag, null, args, null);
@@ -81,29 +81,27 @@ namespace ILRuntime.Runtime.Generated
         }
 
 
-        static object get_subCmd_0(ref object o)
+        static object get_protoName_0(ref object o)
         {
-            return ((AssemblyCommon.MsgPbForm)o).subCmd;
+            return ((AssemblyCommon.MsgPbForm)o).protoName;
         }
 
-        static StackObject* CopyToStack_subCmd_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
+        static StackObject* CopyToStack_protoName_0(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
         {
-            var result_of_this_method = ((AssemblyCommon.MsgPbForm)o).subCmd;
-            __ret->ObjectType = ObjectTypes.Integer;
-            __ret->Value = result_of_this_method;
-            return __ret + 1;
+            var result_of_this_method = ((AssemblyCommon.MsgPbForm)o).protoName;
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static void set_subCmd_0(ref object o, object v)
+        static void set_protoName_0(ref object o, object v)
         {
-            ((AssemblyCommon.MsgPbForm)o).subCmd = (System.Int16)v;
+            ((AssemblyCommon.MsgPbForm)o).protoName = (System.String)v;
         }
 
-        static StackObject* AssignFromStack_subCmd_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
+        static StackObject* AssignFromStack_protoName_0(ref object o, ILIntepreter __intp, StackObject* ptr_of_this_method, IList<object> __mStack)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            System.Int16 @subCmd = (short)ptr_of_this_method->Value;
-            ((AssemblyCommon.MsgPbForm)o).subCmd = @subCmd;
+            System.String @protoName = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            ((AssemblyCommon.MsgPbForm)o).protoName = @protoName;
             return ptr_of_this_method;
         }
 
